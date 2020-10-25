@@ -17,7 +17,7 @@ pipelines:
           integrations:
             - name: kirasoa_artifactory
           inputResources:
-            - name: src_GitRepo
+            - name: cicd_showcase_maven_GitRepo
           outputResources:
             - name: cicd_mvn_dev_BuildInfo
           # runtime:
