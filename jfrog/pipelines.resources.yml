@@ -1,6 +1,6 @@
 resources:
   # Git repo for source
-  - name: src_GitRepo
+  - name: cicd_showcase_maven_GitRepo
     type: GitRepo
     configuration:
       gitProvider: public_github
