@@ -13,21 +13,21 @@ resources:
     type: BuildInfo
     configuration:
       sourceArtifactory: kirasoa_artifactory
-      # buildName:
-      # buildNumber:
+      buildName: cicd-showcase-maven
+      buildNumber: 1
 
   # Build info for qa
   - name: cicd_mvn_qa_BuildInfo
     type: BuildInfo
     configuration:
       sourceArtifactory: kirasoa_artifactory
-      # buildName:
-      # buildNumber:
+      buildName: cicd-showcase-maven
+      buildNumber: 1
 
   # Build info for prod
   - name: cicd_mvn_prod_BuildInfo
     type: BuildInfo
     configuration:
       sourceArtifactory: kirasoa_artifactory
-      # buildName:
-      # buildNumber:
+      buildName: cicd-showcase-maven
+      buildNumber: 1
