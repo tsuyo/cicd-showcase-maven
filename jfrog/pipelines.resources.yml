@@ -6,6 +6,7 @@ resources:
       gitProvider: public_github
       path: tsuyo/cicd-showcase-maven
       files:
+        include: .+
         exclude: ^jfrog\/.+      
 
   # Build info for dev
