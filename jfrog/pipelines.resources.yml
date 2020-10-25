@@ -1,0 +1,33 @@
+resources:
+  # Git repo for source
+  - name: src_GitRepo
+    type: GitRepo
+    configuration:
+      gitProvider: public_github
+      path: tsuyo/cicd-showcase-maven
+      files:
+        exclude: ^jfrog\/.+      
+
+  # Build info for dev
+  - name: cicd_mvn_dev_BuildInfo
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: kirasoa_artifactory
+      # buildName:
+      # buildNumber:
+
+  # Build info for qa
+  - name: cicd_mvn_qa_BuildInfo
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: kirasoa_artifactory
+      # buildName:
+      # buildNumber:
+
+  # Build info for prod
+  - name: cicd_mvn_prod_BuildInfo
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: kirasoa_artifactory
+      # buildName:
+      # buildNumber:

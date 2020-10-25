@@ -1,0 +1,91 @@
+apiVersion: v1.0
+pipelines:
+  - name: cicd-showcase-maven
+    steps:
+      # see https://www.jfrog.com/confluence/display/JFROG/MvnBuild
+      - name: mvn_install
+        type: MvnBuild
+        configuration:
+          mvnCommand: clean install
+          sourceLocation: .
+          configFileLocation: jfrog
+          configFileName: mvn-art-config
+          forceXrayScan: true
+          # failOnScan: true
+          autoPublishBuildInfo: true
+
+          integrations:
+            - name: kirasoa_artifactory
+          inputResources:
+            - name: src_GitRepo
+          outputResources:
+            - name: cicd_mvn_dev_BuildInfo
+          # runtime:
+          #   type: image
+          #   image:
+          #     custom:
+          #       name: kirasoa/pipelines-u18graalvm
+          #       tag: "11"
+        execution:
+          onStart:
+            - echo "[TM] onStart"
+            - restore_cache_files m2_cache ${HOME}/.m2
+            - java -version
+            - mvn -version
+          onSuccess:
+            - echo "[TM] onSuccess"
+            - add_cache_files ${HOME}/.m2 m2_cache
+          onFailure:
+            - echo "[TM] onFailure"
+          onComplete:
+            - echo "[TM] onComplete"
+
+      - name: test_pre_qa
+        type: Bash
+        configuration:
+          inputSteps:
+            - name: mvn_install
+        execution:
+          onExecute:
+            - echo "executing test pre qa"
+
+      - name: promote_to_qa
+        type: PromoteBuild
+        configuration:
+          targetRepository: cicd-mvn-qa-local
+          includeDependencies: false
+          status: QA
+          comment: test pre qa passed
+          # copy: false
+          inputResources:
+            - name: cicd_mvn_dev_BuildInfo
+              trigger: true
+          inputSteps:
+            - name: test_pre_qa
+          outputResources:
+            - name: cicd_mvn_qa_BuildInfo
+
+      - name: test_pre_prod
+        type: Bash
+        configuration:
+          inputSteps:
+            - name: promote_to_qa
+        execution:
+          onExecute:
+            - echo "executing test pre prod"
+
+      - name: promote_to_prod
+        type: PromoteBuild
+        configuration:
+          targetRepository: cicd-mvn-prod-local
+          includeDependencies: false
+          status: PROD
+          comment: test pre prod passed
+          # copy: false
+          inputResources:
+            - name: cicd_mvn_qa_BuildInfo
+              trigger: true
+          inputSteps:
+            - name: test_pre_prod
+          outputResources:
+            - name: cicd_mvn_prod_BuildInfo

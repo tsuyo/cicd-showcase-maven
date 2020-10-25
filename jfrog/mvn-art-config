@@ -1,0 +1,10 @@
+version: 1
+type: maven
+resolver:
+  snapshotRepo: cicd-mvn-dev
+  releaseRepo: cicd-mvn-dev
+  serverID: kirasoa_artifactory
+deployer:
+  snapshotRepo: cicd-mvn-dev-local
+  releaseRepo: cicd-mvn-dev-local
+  serverID: kirasoa_artifactory
