@@ -15,9 +15,9 @@
   <name>cicd-showcase-maven</name>
   <description>CI/CD Showcase for Maven</description>
 
-  <properties>
+  <!-- <properties>
     <java.version>11</java.version>
-  </properties>
+  </properties> -->
 
   <dependencies>
     <dependency>
